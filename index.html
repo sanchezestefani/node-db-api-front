@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Alumnos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="logo">
+      <span class="logo-emoji">🎓</span>
+      <span>AlumnosDB</span>
+    </div>
+
+    <nav>
+      <button class="nav-btn active" onclick="mostrarSeccion('agregar', this)">
+        <span class="icon">➕</span> Agregar
+      </button>
+      <button class="nav-btn" onclick="mostrarSeccion('listar', this)">
+        <span class="icon">📋</span> Listar
+      </button>
+      <button class="nav-btn" onclick="mostrarSeccion('buscarId', this)">
+        <span class="icon">🔍</span> Buscar por ID
+      </button>
+      <button class="nav-btn" onclick="mostrarSeccion('buscarMat', this)">
+        <span class="icon">🎫</span> Buscar Matrícula
+      </button>
+      <button class="nav-btn" onclick="mostrarSeccion('actualizar', this)">
+        <span class="icon">✏️</span> Actualizar
+      </button>
+      <button class="nav-btn" onclick="mostrarSeccion('borrar', this)">
+        <span class="icon">🗑️</span> Borrar
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span class="dot"></span> API conectada
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div id="mensaje" class="mensaje oculto"></div>
+
+    <div id="sec-agregar" class="seccion">
+      <div class="page-header">
+        <h1>Agregar Alumno</h1>
+        <p>Registra un nuevo alumno en el sistema</p>
+      </div>
+      <div class="card">
+        <div class="form-grid">
+          <div class="field">
+            <label>Matrícula</label>
+            <input type="number" id="ag-matricula" placeholder="2024087645" />
+          </div>
+          <div class="field">
+            <label>Nombre completo</label>
+            <input type="text" id="ag-nombre" placeholder="Estefani Sánchez" />
+          </div>
+          <div class="field full">
+            <label>Domicilio</label>
+            <input type="text" id="ag-domicilio" placeholder="Av. del Mar 12" />
+          </div>
+          <div class="field">
+            <label>Fecha de nacimiento</label>
+            <input type="date" id="ag-fechanac" />
+          </div>
+          <div class="field">
+            <label>Sexo</label>
+            <select id="ag-sexo">
+              <option value="">Seleccionar...</option>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="ag-status">
+              <option value="1">Activo</option>
+              <option value="0">Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="agregarAlumno()">Guardar alumno</button>
+      </div>
+    </div>
+
+    <div id="sec-listar" class="seccion oculto">
+      <div class="page-header">
+        <h1>Lista de Alumnos</h1>
+        <p>Todos los alumnos registrados en el sistema</p>
+      </div>
+      <div class="card">
+        <button class="btn btn-primary" onclick="listarAlumnos()">Cargar alumnos</button>
+        <div id="tabla-container" style="margin-top:20px;"></div>
+      </div>
+    </div>
+
+    <div id="sec-buscarId" class="seccion oculto">
+      <div class="page-header">
+        <h1>Buscar por ID</h1>
+        <p>Encuentra un alumno con su número de ID</p>
+      </div>
+      <div class="card">
+        <div class="search-row">
+          <input type="number" id="inp-bid" placeholder="Ej: 1" />
+          <button class="btn btn-primary" onclick="buscarPorId()">Buscar</button>
+        </div>
+        <div id="res-bid"></div>
+      </div>
+    </div>
+
+    <div id="sec-buscarMat" class="seccion oculto">
+      <div class="page-header">
+        <h1>Buscar por Matrícula</h1>
+        <p>Encuentra un alumno con su número de matrícula</p>
+      </div>
+      <div class="card">
+        <div class="search-row">
+          <input type="number" id="inp-bmat" placeholder="Ej: 2023030001" />
+          <button class="btn btn-primary" onclick="buscarPorMatricula()">Buscar</button>
+        </div>
+        <div id="res-bmat"></div>
+      </div>
+    </div>
+
+    <div id="sec-actualizar" class="seccion oculto">
+      <div class="page-header">
+        <h1>Actualizar Alumno</h1>
+        <p>Modifica los datos de un alumno existente</p>
+      </div>
+      <div class="card">
+        <div class="form-grid">
+          <div class="field full">
+            <label>ID del alumno a actualizar</label>
+            <input type="number" id="up-id" placeholder="1" />
+          </div>
+          <div class="field">
+            <label>Nuevo nombre</label>
+            <input type="text" id="up-nombre" placeholder="Dejar vacío para no cambiar" />
+          </div>
+          <div class="field">
+            <label>Nuevo domicilio</label>
+            <input type="text" id="up-domicilio" placeholder="Dejar vacío para no cambiar" />
+          </div>
+          <div class="field">
+            <label>Nueva fecha de nacimiento</label>
+            <input type="date" id="up-fechanac" />
+          </div>
+          <div class="field">
+            <label>Nuevo sexo</label>
+            <select id="up-sexo">
+              <option value="">Sin cambiar</option>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Nuevo status</label>
+            <select id="up-status">
+              <option value="">Sin cambiar</option>
+              <option value="1">Activo</option>
+              <option value="0">Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="actualizarAlumno()">Actualizar alumno</button>
+      </div>
+    </div>
+
+    <div id="sec-borrar" class="seccion oculto">
+      <div class="page-header">
+        <h1>Borrar Alumno</h1>
+        <p>Elimina permanentemente un alumno del sistema</p>
+      </div>
+      <div class="card">
+        <div class="search-row">
+          <input type="number" id="inp-del" placeholder="ID del alumno" />
+          <button class="btn btn-danger" onclick="borrarAlumno()">Borrar</button>
+        </div>
+        <div id="res-del"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
