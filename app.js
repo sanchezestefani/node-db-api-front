@@ -1,4 +1,4 @@
-const API_URL = "https://node-db-api-44g4.onrender.com/alumnos"; 
+const API = "https://node-db-api-44g4.onrender.com/alumnos";
 
 function mostrarSeccion(id, btn) {
   document.querySelectorAll(".seccion").forEach(function(s) {
