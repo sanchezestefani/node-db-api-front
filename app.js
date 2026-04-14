@@ -1,4 +1,4 @@
-const API = "http://100.29.233.187:5006/alumnos";
+const API_URL = "https://100.29.233.187/alumnos";
 
 function mostrarSeccion(id, btn) {
   document.querySelectorAll(".seccion").forEach(function(s) {
